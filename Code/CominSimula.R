@@ -214,6 +214,7 @@ Comin=function(b,dato.simulado){
     
     M <-resul
     return(M)
+    # return(homeostasis) ### Pensar como recuperarla !!!!!!
   }
   
  
@@ -227,6 +228,7 @@ Comin=function(b,dato.simulado){
   M<-pmatriz(data,b)
   M
   return(M)
+  
   
 } # cierre final 
   
@@ -490,9 +492,9 @@ f.data.gen.comunid<-function(especies,sitios) {
 #############################################
 
 # genera datos tipo TEAM
-matrices<-list()
-for (i in 1:50){
-test <- f.data.gen.comunid(especies=25,sitios=60)
+matrices<-list() #crea lista vacia para guardad matrices
+for (i in 1:1000){ ####  <<<---Numero de simulaciones AQUI
+test <- f.data.gen.comunid(especies=100,sitios=60)
 sim.i <- as.data.frame(Comin(b=2,dato.simulado=test))
 sim.i$sim_number <- as.vector(rep(i,60))
 sim.i$y <-as.vector(seq(1, 60, by = 1))
@@ -504,13 +506,17 @@ require (plyr)
 dat <- ldply(matrices, data.frame)
 
 
-g2<-ggplot(data=dat,aes(y=Autopoiesis, x=y, colour=factor(sim_number))) 
-g2 + geom_point(alpha = 1/4, colour="gray50") + 
-  geom_smooth(method=lm,fullrange=T, alpha = 0.1, se=FALSE) +
+g2<-ggplot(data=dat,aes(y=Autopoiesis, x=y, group = sim_number)) 
+g2 + geom_point(alpha = I(0.1),size = I(2)) + 
+  geom_smooth(aes(colour=factor(sim_number),alpha = 0.1),method=lm,fullrange=T, se=FALSE) +
+  scale_colour_discrete(guide = guide_legend(override.aes = list(alpha = 1)))+
   theme(legend.position="none") 
   
-
-
+# 
+# g2 + geom_path(alpha = I(0.1)) + 
+#   geom_smooth(aes(colour=factor(sim_number),alpha = 0.1),method=lm,fullrange=T, se=FALSE) +
+#   scale_colour_discrete(guide = guide_legend(override.aes = list(alpha = 1)))+
+#   theme(legend.position="none") 
 
 
 
