@@ -1,7 +1,7 @@
 Comin function
 ========
 
-To simulate species ocupancy in n sampling sites, taking in to account the probability of detection. Coming calculates: Emergence, Self organization, Complexity and Autopoiesis as in: Gershenson and Fernandez (2012) 
+To simulate species ocupancy in n sampling sites, taking in to account the probability of detection. Comin calculates: Emergence, Self organization, Complexity and Autopoiesis as in: Gershenson and Fernandez (2012) 
 
 By: Diego J. Lizcano, Cristian Villate and Nelson Fenandez
 
