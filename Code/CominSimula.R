@@ -1,16 +1,10 @@
 # complexity and information
 #first part
 
-# ext 1 es extension csv -eliminado
-# f es file path -eliminado
-# r es directorio - elimiado
-# ld es ? borrar! - borrado
-# it es seleccion vector o matriz - borrado
-### que es la b???? base??? = 10 ?????
 
 Comin=function(b,dato.simulado){
-  t<-34
-  dv<-34
+  #t<-34
+  #dv<-34
  # rm(list=ls())
   pmatriz<-function(matriz,base){
     fias<-nrow(matriz)
@@ -33,9 +27,11 @@ Comin=function(b,dato.simulado){
     CA<-0
     color<-0
     
-    for(f in 1:colum){
-      info[f]<-0
-    }
+    #for(f in 1:colum){
+    #  info[f]<-0
+    #} 
+    info<-rep(x=0,colum)
+    
     base<-base-0.0001
     for (i in 1:colum){
       r<-matriz[,i]
@@ -79,53 +75,56 @@ Comin=function(b,dato.simulado){
       E[i]=info[i]
       S[i]=1-E[i]
       C[i]=4*E[i]*S[i]
-      if(E[i]<=1 & E[i]>=0.8){
-        CE[i]<-"darkblue"
-      }
-      if(E[i]<0.8& E[i]>=0.6){
-        CE[i]<-"green"
-      }
-      if(E[i]<0.6 & E[i]>=0.4){
-        CE[i]<-"yellow"
-      }
-      if(E[i]<0.4 & E[i]>=0.2){
-        CE[i]<-"orange"
-      }
-      if(E[i]<0.2 & E[i]>=0){
-        CE[i]<-"red"
-      }
-      if(S[i]<=1 & S[i]>=0.8){
-        CS[i]<-"darkblue"
-      }
-      if(S[i]<0.8& S[i]>=0.6){
-        CS[i]<-"green"
-      }
-      if(S[i]<0.6 & S[i]>=0.4){
-        CS[i]<-"yellow"
-      }
-      if(S[i]<0.4 & S[i]>=0.2){
-        CS[i]<-"orange"
-      }
-      if(S[i]<0.2 & S[i]>=0){
-        CS[i]<-"red"
-      }
-      if(C[i]<=1 & C[i]>=0.8){
-        CC[i]<-"darkblue"
-      }
-      if(C[i]<0.8& C[i]>=0.6){
-        CC[i]<-"green"
-      }
-      if(C[i]<0.6 & C[i]>=0.4){
-        CC[i]<-"yellow"
-      }
-      if(C[i]<0.4 & C[i]>=0.2){
-        CC[i]<-"orange"
-      }
-      if(C[i]<0.2 & C[i]>=0){
-        CC[i]<-"red"
-      }
       
-    }
+#       if(E[i]<=1 & E[i]>=0.8){
+#         CE[i]<-"darkblue"
+#       }
+#       if(E[i]<0.8& E[i]>=0.6){
+#         CE[i]<-"green"
+#       }
+#       if(E[i]<0.6 & E[i]>=0.4){
+#         CE[i]<-"yellow"
+#       }
+#       if(E[i]<0.4 & E[i]>=0.2){
+#         CE[i]<-"orange"
+#       }
+#       if(E[i]<0.2 & E[i]>=0){
+#         CE[i]<-"red"
+#       }
+#       if(S[i]<=1 & S[i]>=0.8){
+#         CS[i]<-"darkblue"
+#       }
+#       if(S[i]<0.8& S[i]>=0.6){
+#         CS[i]<-"green"
+#       }
+#       if(S[i]<0.6 & S[i]>=0.4){
+#         CS[i]<-"yellow"
+#       }
+#       if(S[i]<0.4 & S[i]>=0.2){
+#         CS[i]<-"orange"
+#       }
+#       if(S[i]<0.2 & S[i]>=0){
+#         CS[i]<-"red"
+#       }
+#       if(C[i]<=1 & C[i]>=0.8){
+#         CC[i]<-"darkblue"
+#       }
+#       if(C[i]<0.8& C[i]>=0.6){
+#         CC[i]<-"green"
+#       }
+#       if(C[i]<0.6 & C[i]>=0.4){
+#         CC[i]<-"yellow"
+#       }
+#       if(C[i]<0.4 & C[i]>=0.2){
+#         CC[i]<-"orange"
+#       }
+#       if(C[i]<0.2 & C[i]>=0){
+#         CC[i]<-"red"
+#       #}
+      
+    } ### cierra for de i
+    
+    
     aux<-1
     conta<-1
     for(fg in 1:colum){
@@ -146,6 +145,8 @@ Comin=function(b,dato.simulado){
       }
       
     }
+    
+    
     factor<-colum*(1/105)
     factor<-1-factor
     haming<-c(1:fias)
@@ -173,16 +174,19 @@ Comin=function(b,dato.simulado){
     for(i in 1:colum){
       gh<-(sumcom-C[i])/res
       AUTOP[i]<-(C[i]/gh)
-      if(AUTOP[i]==1){
-        CA[i]<-"black"
-      }
-      if(AUTOP[i]>1){
-        CA[i]<-"darkblue"
-      }
-      if(AUTOP[i]<1){
-        CA[i]<-"darkred"
-      }
+      
+#       if(AUTOP[i]==1){
+#         CA[i]<-"black"
+#       }
+#       if(AUTOP[i]>1){
+#         CA[i]<-"darkblue"
+#       }
+#       if(AUTOP[i]<1){
+#         CA[i]<-"darkred"
+#       }
     }
+    
+    
     resul<-matrix(c(E,S,C,AUTOP),ncol=4,nrow=colum)
     lim<-max(AUTOP)
     rownames(resul)<-names(matriz)
@@ -233,214 +237,6 @@ Comin=function(b,dato.simulado){
 } # cierre final 
   
   #############################################
-  
-#   
-#   pvectores<-function(data,b){
-#     max1<-max(data)
-#     min1<-min(data)
-#     rango<-(max1-min1)
-#     tama<-length(data)
-#     i=0
-#     basetrans<-3
-#     cont<-0
-#     info<-0
-#     b<-b-0.001
-#     for(i in 1:tama){ # recorriendo el vector por el tama?o
-#       if(rango==0){
-#         basetrans[i]<-0
-#       }
-#       else{
-#         basetrans[i]<-floor(b*((data[i]-min1)/rango))#transformando el vector a la base deseada
-#       }
-#     }
-#     lim=floor(base)
-#     for(k in 1:lim+1){ #creando el vector que cuenta cuantas veces esta el dato
-#       cont[k]=0
-#     }
-#     for(i in 0:lim){
-#       for(j in 1:tama){
-#         if(basetrans[j]==i){
-#           cont[i+1]<-cont[i+1]+1  #contando cuantas veces esta el dato
-#         }
-#       }
-#     }
-#     prob<-cont/tama #probabiidad del vector
-#     for(u in 0:lim){
-#       if(prob[u+1]==0){
-#         logar<-0
-#       }
-#       else
-#       {
-#         logar<-log(prob[u+1],lim+1) 
-#       }
-#       info<-info+(prob[u+1]*logar) #informacion del vectores negatico
-#     }
-#     info=info*-1 #informacion del vector
-#     E=info #emergencia ,auto-organizacion y complejidad
-#     S=1-E
-#     C=4*E*S
-#     if(E<=1 & E>=0.8){#colores de las emergencias ,auto-organizacion y complejidad
-#       CE<-"darkblue"
-#     }
-#     if(E<0.8& E>=0.6){
-#       CE<-"green"
-#     }
-#     if(E<0.6 & E>=0.4){
-#       CE<-"yellow"
-#     }
-#     if(E<0.4 & E>=0.2){
-#       CE<-"orange"
-#     }
-#     if(E<0.2 & E>=0){
-#       CE<-"red"
-#     }
-#     if(S<=1 & S>=0.8){
-#       CS<-"darkblue"
-#     }
-#     if(S<0.8& S>=0.6){
-#       CS<-"green"
-#     }
-#     if(S<0.6 & S>=0.4){
-#       CS<-"yellow"
-#     }
-#     if(S<0.4 & S>=0.2){
-#       CS<-"orange"
-#     }
-#     if(S<0.2 & S>=0){
-#       CS<-"red"
-#     }
-#     if(C<=1 & C>=0.8){
-#       CC<-"darkblue"
-#     }
-#     if(C<0.8& C>=0.6){
-#       CC<-"green"
-#     }
-#     if(C<0.6 & C>=0.4){
-#       CC<-"yellow"
-#     }
-#     if(C<0.4 & C>=0.2){
-#       CC<-"orange"
-#     }
-#     if(C<0.2 & C>=0){
-#       CC<-"red"
-#     }
-#     resul<-c(E,S,C) #resultados de los datos
-#     
-#     names(resul)<-c("Emergence","Self-organization","Complexity") #nombres de los datos
-#     par(mfrow=c(1,1)) 
-#     barplot(resul,ylim=c(0,1), main="Emergence,Self-organization and Complexity", col=c(CE,CS,CC)) #graica de los datos
-#     V <- matrix(c(E,S,C),nrow =1, ncol = 3, byrow=TRUE,  dimnames=list( c("value"),c("Emergence", "Selforganization", "Complexity")))
-#     V
-#     return(V)
-#   } # cierra vectores
-#   
-#   ##########################################
-#   
-#   
-  
-  
-  
-  
-  
-#   repeat{
-#     if(it>=1 && it<=4)break
-#   }
-  
-  
-  
-  
-#   #third part
-#   if(it==1){ #datos para vectores en R
-#     repeat{
-#       max1<-max(data)
-#       min1<-min(data)
-#       rango<-(max1-min1)
-#       tama<-length(data)
-#       i=0
-#       basetrans<-3
-#       cont<-0
-#       info<-0
-#       if(tama>=2)break
-#     }
-#     V<-pvectores(ld,b)
-#     return(V)
-#   }
-#   
-  
-  
-#   
-#   if(it==3) { #datos para matrices extraidas
-#     #1
-#     #2
-#     setwd(r)
-#     #3
-#     if(ext==1){ #datos csv
-#       #4
-#       data<-read.csv(f) # lee toda la tabla Nelson
-#       
-#       attach(data)
-#       M<-pmatriz(data,b)
-#       M
-#       return(M)
-#     }
-#     if(ext==2){ #datos txt
-#       #4
-#       data<-read.delim(f, header = TRUE, sep = "\t") # lee toda la tabla Nelson
-#       
-#       attach(data)
-#       M<-pmatriz(data,b)
-#       M
-#       return(M)
-#     }
-#     if(ext==3){ #datos spps
-#       #4
-#       library(foreign)
-#       data <- read.spss(f, to.data.frame = TRUE)
-#       
-#       attach(data)
-#       M<-pmatriz(data,b)
-#       M
-#       return(M)
-#     }
-#   }
-#   if(it==2){ #matrices en R
-#     M<-pmatriz(ld,b)
-#     return(M)
-#   }
-# } # last   
-  
-  
-#   if(it==4){ #vectores extraidos
-#     #2
-#     setwd(r)
-#     #3
-#     if(ext==1){ #datos csv
-#       data<-read.csv(f) 
-#       
-#       V<-pvectores(data,b)
-#       V
-#       return(V)
-#     }
-#     if(ext==2){ #datos txt
-#       #4
-#       data<-read.delim(f, header = TRUE, sep = "\t") 
-#       V<-pvectores(data,b)
-#       V
-#       return(V)
-#     }
-#     
-#     if(ext==3){ #datos spps
-#       #4
-#       library(foreign)
-#       V <- read.spss(f, to.data.frame = TRUE)
-#       V<-pvectores(data,b)
-#       V
-#       return(V)
-#     }
-#   }
-
-# last }  eliminado y movido arriba  
-
 
 
 
@@ -463,21 +259,27 @@ f.data.gen.pobl<-function(individuos,sitios,psi,p) {
 }
 
 
-#Genera matriz de una comunidad con n-especies, n-sitios; p uniforme (azar) entre 0.2 y 9.9  (p ~ runif(n=1,min=0.2,max=0.99))
-# psi como distrib uniforme (azar) entre 0.2 y 9.9  (psi ~ runif(n=1,min=0.2,max=0.99))
+#Genera matriz de una comunidad con n-especies, n-sitios; p uniforme (azar) entre 0.1 y 0.9  (p ~ runif(n=1,min=0.1,max=0.9))
+# psi como distrib uniforme (azar) entre 0.1 y 0.9  (psi ~ runif(n=1,min=0.1,max=0.9))
 # cada especie con p y psi diferente
 f.data.gen.comunid<-function(especies,sitios) {
   res<-matrix(NA,nr=especies,nc=sitios)
+  psi.p<-matrix(NA,nr=especies,nc=2)
   for (d in 1:especies){
-    psi <- runif(n=1,min=0.2,max=0.99)
-    p <- runif(n=1,min=0.2,max=0.99)
+    psi <- runif(n=1,min=0.1,max=0.9)
+    p <- runif(n=1,min=0.1,max=0.9)
     #generate the expected occupancies
     n<-rbinom(especies,1,psi)
     #generate the observations
-    for(i in 1:especies)
+    for(i in 1:especies){
       res[d,]<-rbinom(sitios,1,n[i]*p)
+    }
     #print(res)
-  } 
+    #print(c(psi,p))
+    psi.p[d,1]<-psi #guarda psi
+    psi.p[d,2]<-p #guarda p
+  }
+  res<-cbind(res,psi.p) # pega especies y psi.p
   return(res)
 }
 
@@ -490,34 +292,61 @@ f.data.gen.comunid<-function(especies,sitios) {
 ######  Cambiar parametros    ###############
 ######  Hace coming de test   ###############
 #############################################
-
-# genera datos tipo TEAM
-matrices<-list() #crea lista vacia para guardad matrices
-for (i in 1:1000){ ####  <<<---Numero de simulaciones AQUI
-test <- f.data.gen.comunid(especies=100,sitios=60)
-sim.i <- as.data.frame(Comin(b=2,dato.simulado=test))
-sim.i$sim_number <- as.vector(rep(i,60))
-sim.i$y <-as.vector(seq(1, 60, by = 1))
-matrices[[i]] <- sim.i
-}
 require (ggplot2)
 require (plyr)
 
+
+# genera datos tipo TEAM 60 sitios
+matrices<-list() #crea lista vacia para guardad matrices
+especies=500 ####  <<<---Numero de especies  AQUI
+sitios=60 ####  <<<---Numero de sitios AQUI
+for (i in 1:1000){ ####  <<<---Numero de simulaciones AQUI
+test <- f.data.gen.comunid(especies=especies,sitios=sitios)
+sim.i <- as.data.frame(Comin(b=2,dato.simulado=test[,1:sitios]))
+sim.i$sim_number <- as.vector(rep(i,sitios))
+sim.i$sitios <-as.vector(seq(1, sitios, by = 1))
+matrices[[i]] <- sim.i
+}
+
+# convierte lista a dataframe
 dat <- ldply(matrices, data.frame)
 
-
-g2<-ggplot(data=dat,aes(y=Autopoiesis, x=y, group = sim_number)) 
+# 1000 lineas. una por simulacion
+g2<-ggplot(data=dat,aes(y=Self.organization, x=sitios, group = sim_number)) 
 g2 + geom_point(alpha = I(0.1),size = I(2)) + 
   geom_smooth(aes(colour=factor(sim_number),alpha = 0.1),method=lm,fullrange=T, se=FALSE) +
   scale_colour_discrete(guide = guide_legend(override.aes = list(alpha = 1)))+
   theme(legend.position="none") 
-  
-# 
-# g2 + geom_path(alpha = I(0.1)) + 
-#   geom_smooth(aes(colour=factor(sim_number),alpha = 0.1),method=lm,fullrange=T, se=FALSE) +
+# # una sola linea promedio
+# g2 + geom_smooth(aes(colour="red",size=1),method=lm,fullrange=T, se=T) +
+#   geom_point(alpha = I(0.01),size = I(2)) + geom_jitter() +
 #   scale_colour_discrete(guide = guide_legend(override.aes = list(alpha = 1)))+
 #   theme(legend.position="none") 
+# 
 
+# g2 + geom_hex(bins=10) # test con hex bins
+  
 
+source("code\\vwReg.R")
+# build a demo data set
+# set.seed(1)
+# x <- rnorm(200, 0.8, 1.2) 
+# e <- rnorm(200, 0, 3)*(abs(x)^1.5 + .5) + rnorm(200, 0, 4)
+# e2 <- rnorm(200, 0, 5)*(abs(x)^1.5 + .8) + rnorm(200, 0, 5)
+# y <- 8*x - x^3 + e
+# y2 <- 20 + 3*x + 0.6*x^3 + e2
+# df <- data.frame(x, y, y2)
+# 
+# p1 <- vwReg(y~x, df, spag=TRUE, shade=FALSE)
+# p2 <- vwReg(y2~x, df, add=TRUE, spag=TRUE, shade=FALSE, spag.color="red", shape=3)
+# p3 <- p1 + p2
+# p3
+
+p1 <- vwReg(Self.organization~sitios, dat, spag=TRUE, shade=FALSE)
+p2 <- vwReg(Complexity~sitios, dat, add=TRUE, spag=TRUE, shade=FALSE, spag.color="red", shape=3)
+p3 <- vwReg(Emergence~sitios, dat, add=TRUE, spag=TRUE, shade=FALSE, spag.color="green", shape=3)
+
+p4 <- p1 + p2 + p3
+p4
 
 
