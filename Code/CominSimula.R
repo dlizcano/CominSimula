@@ -253,9 +253,10 @@ f.data.gen.pobl<-function(individuos,sitios,psi,p) {
   #generate the expected occupancies
   n<-rbinom(individuos,1,psi)
   #generate the observations
-  for(i in 1:individuos)
+  for(i in 1:individuos){
     res[i,]<-rbinom(sitios,1,n[i]*p)
-  return(res)  
+  }
+  return(res)
 }
 
 
@@ -296,57 +297,112 @@ require (ggplot2)
 require (plyr)
 
 
-# genera datos tipo TEAM 60 sitios
-matrices<-list() #crea lista vacia para guardad matrices
-especies=500 ####  <<<---Numero de especies  AQUI
-sitios=60 ####  <<<---Numero de sitios AQUI
-for (i in 1:1000){ ####  <<<---Numero de simulaciones AQUI
-test <- f.data.gen.comunid(especies=especies,sitios=sitios)
-sim.i <- as.data.frame(Comin(b=2,dato.simulado=test[,1:sitios]))
-sim.i$sim_number <- as.vector(rep(i,sitios))
-sim.i$sitios <-as.vector(seq(1, sitios, by = 1))
-matrices[[i]] <- sim.i
+# para generar datos tipo TEAM usar 60 sitios
+matrices<-list() #crea lista vacia para guardar matrices
+# especies=2 ####  <<<---Numero de especies  AQUI
+sitios=10 ####  <<<---Numero de sitios AQUI
+for (i in 1:100){ ####  <<<---Numero de simulaciones AQUI
+  test <- f.data.gen.comunid(especies=especies,sitios=sitios)
+  sim.i <- as.data.frame(Comin(b=2,dato.simulado=test[,1:sitios]))
+  sim.i$sim_number <- as.vector(rep(i,sitios))
+  sim.i$sitio <-as.vector(seq(1, sitios, by = 1))
+  matrices[[i]] <- sim.i
 }
+
 
 # convierte lista a dataframe
 dat <- ldply(matrices, data.frame)
 
-# 1000 lineas. una por simulacion
-g2<-ggplot(data=dat,aes(y=Self.organization, x=sitios, group = sim_number)) 
-g2 + geom_point(alpha = I(0.1),size = I(2)) + 
-  geom_smooth(aes(colour=factor(sim_number),alpha = 0.1),method=lm,fullrange=T, se=FALSE) +
-  scale_colour_discrete(guide = guide_legend(override.aes = list(alpha = 1)))+
-  theme(legend.position="none") 
-# # una sola linea promedio
-# g2 + geom_smooth(aes(colour="red",size=1),method=lm,fullrange=T, se=T) +
-#   geom_point(alpha = I(0.01),size = I(2)) + geom_jitter() +
-#   scale_colour_discrete(guide = guide_legend(override.aes = list(alpha = 1)))+
-#   theme(legend.position="none") 
-# 
+# Transpone matriz
+dat.long<- data.frame(Variable = factor( rep(c("Emergence","Self.organization","Complexity"), each=60000) ), 
+              Valor = c(dat[,1],dat[,2],dat[,3]))
 
-# g2 + geom_hex(bins=10) # test con hex bins
+
+##### Box plot
+g1<-ggplot(dat.long, aes(x = Variable, y = Valor, fill=Variable))
+g2 <- g1 + geom_boxplot() + guides(fill=FALSE) + 
+  stat_summary(fun.y=mean, geom="point", shape=5, size=4)
+
+
+#___________________________________________
+#___________________________________________
+
+f.simula<-function(especies) {# funcion simula y retorna mat para boxplot
+  matrices<-list() #crea lista vacia para guardad matrices
+  # especies=2 ####  <<<---Numero de especies  AQUI
+  sitios=10 ####  <<<---Numero de sitios AQUI
+  Nsim<-1000 ####  <<<---Numero de simulaciones AQUI
+  for (i in 1:Nsim){ ####  <<<---Numero de simulaciones AQUI
+    test <- f.data.gen.comunid(especies=especies,sitios=sitios)
+    sim.i <- as.data.frame(Comin(b=2,dato.simulado=test[,1:sitios]))
+    sim.i$sim_number <- as.vector(rep(i,sitios))
+    sim.i$sitio <-as.vector(seq(1, sitios, by = 1))
+    matrices[[i]] <- sim.i
+  }
+  # convierte lista a dataframe
+  dat <- ldply(matrices, data.frame)
+  
+  # Transpone matriz
+  #dat.long<- data.frame(Variable = factor( rep(c("Emergence","Self.organization","Complexity"), each=Nsim) ), 
+                        #Valor = c(dat[,1],dat[,2],dat[,3]))
+  # return(dat.long)
+   return(dat)
+}  
   
 
-source("code\\vwReg.R")
-# build a demo data set
-# set.seed(1)
-# x <- rnorm(200, 0.8, 1.2) 
-# e <- rnorm(200, 0, 3)*(abs(x)^1.5 + .5) + rnorm(200, 0, 4)
-# e2 <- rnorm(200, 0, 5)*(abs(x)^1.5 + .8) + rnorm(200, 0, 5)
-# y <- 8*x - x^3 + e
-# y2 <- 20 + 3*x + 0.6*x^3 + e2
-# df <- data.frame(x, y, y2)
-# 
-# p1 <- vwReg(y~x, df, spag=TRUE, shade=FALSE)
-# p2 <- vwReg(y2~x, df, add=TRUE, spag=TRUE, shade=FALSE, spag.color="red", shape=3)
-# p3 <- p1 + p2
-# p3
 
-p1 <- vwReg(Self.organization~sitios, dat, spag=TRUE, shade=FALSE)
-p2 <- vwReg(Complexity~sitios, dat, add=TRUE, spag=TRUE, shade=FALSE, spag.color="red", shape=3)
-p3 <- vwReg(Emergence~sitios, dat, add=TRUE, spag=TRUE, shade=FALSE, spag.color="green", shape=3)
 
-p4 <- p1 + p2 + p3
-p4
 
+
+
+
+##### simulador de datos comin
+##### punto intersecto con eje y en regresion mas error estandar
+##### corre en 2 horas
+bigtable<-list() #Lista vacia para almacenar datos
+
+for (i in 1:20){
+  a<-i*20
+  dat.lon<-f.simula(a) #### <<<--- a es numero de especies
+  graph_name<-paste("g",i,".png",sep="")
+  spnumber<-paste(a," especies",sep="")
+  
+  #Calculates lineal regresions
+  regreEmer<-lm(dat.lon$sitio~dat.lon$Emergence) 
+  regreSelf.o<-lm(dat.lon$sitio~dat.lon$Self.organization)
+  regreComplex<-lm(dat.lon$sitio~dat.lon$Complexity)
+  
+  #index extract 
+  summaryEmer<-summary(regreEmer) 
+  intEmer<-summaryEmer$coefficients[[1]]
+  stdEEmer<-summaryEmer$coefficients[[3]]
+  
+  summarySelf.o<-summary(regreSelf.o)
+  intSelf.o<-summarySelf.o$coefficients[[1]]
+  stdESelf.o<-summarySelf.o$coefficients[[3]]
+  
+  summaryComplex<-summary(regreComplex)
+  intComplex<-summaryComplex$coefficients[[1]]
+  stdEComplex<-summaryComplex$coefficients[[3]]
+  
+  mtable<-rbind(intEmer,intSelf.o,intComplex)
+  etable<-rbind(stdEEmer,stdESelf.o,stdEComplex)
+  sptable<-rbind(a,a+2,a+4)
+  bigtable1<-cbind(mtable,etable)
+  bigtable2<-as.data.frame(cbind(bigtable1,sptable))
+  bigtable2$Measure<-c("Emer","Self.O","Complex")
+  bigtable[[i]]<-bigtable2
+  
+} # end loop
+
+# convierte lista a dataframe y pone nombres
+bigtableDF <- ldply(bigtable, data.frame)
+
+bigtable<-as.data.frame(bigtable)
+colnames(bigtable)<-rbind("x", "Species_Number","Emer","stdEmer", "Self.o", "stdESelf.o","Complex","stdComplex")
+
+#Grafica
+p <- ggplot(bigtableDF, aes(color=Measure,y=V1, x=V3,ymin = V1 - V2, ymax=V1 + V2))
+p + geom_point()  + geom_errorbar(width = 1.5) + labs(x = "Species", y="Measure")
+  
 
