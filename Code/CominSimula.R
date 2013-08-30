@@ -327,7 +327,7 @@ g2 <- g1 + geom_boxplot() + guides(fill=FALSE) +
 #___________________________________________
 #___________________________________________
 
-f.simula<-function(especies) {# funcion simula y retorna mat para boxplot
+f.simula<-function(especies) {# funcion simula y retorna matriz de medidas para n species x mil
   matrices<-list() #crea lista vacia para guardad matrices
   # especies=2 ####  <<<---Numero de especies  AQUI
   sitios=10 ####  <<<---Numero de sitios AQUI
@@ -361,7 +361,7 @@ f.simula<-function(especies) {# funcion simula y retorna mat para boxplot
 ##### corre en 2 horas
 bigtable<-list() #Lista vacia para almacenar datos
 
-for (i in 1:20){
+for (i in 420:1000){
   a<-i*20
   dat.lon<-f.simula(a) #### <<<--- a es numero de especies
   graph_name<-paste("g",i,".png",sep="")
@@ -395,14 +395,15 @@ for (i in 1:20){
   
 } # end loop
 
+# paste con la uno bigtableDF
 # convierte lista a dataframe y pone nombres
-bigtableDF <- ldply(bigtable, data.frame)
+bigtableDF2 <- ldply(bigtable, data.frame)
 
-bigtable<-as.data.frame(bigtable)
-colnames(bigtable)<-rbind("x", "Species_Number","Emer","stdEmer", "Self.o", "stdESelf.o","Complex","stdComplex")
+#bigtable<-as.data.frame(bigtable)
+colnames(bigtableDF2)<-rbind("x", "Species_Number","Emer","stdEmer", "Self.o", "stdESelf.o","Complex","stdComplex")
 
 #Grafica
-p <- ggplot(bigtableDF, aes(color=Measure,y=V1, x=V3,ymin = V1 - V2, ymax=V1 + V2))
+p <- ggplot(bigtableDF2, aes(color=Measure,y=V1, x=V3,ymin = V1 - V2, ymax=V1 + V2))
 p + geom_point()  + geom_errorbar(width = 1.5) + labs(x = "Species", y="Measure")
   
 
